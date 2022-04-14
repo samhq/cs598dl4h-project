@@ -125,7 +125,6 @@ After the processing have been done, we get the following statistics:
 
   ```bash
   cd ~/cs598dl4h-project/data
-  vim processing.py
   python processing.py
   ```
 
