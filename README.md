@@ -16,34 +16,36 @@
 - `data/`
   - `processing.py`: The data preprocessing file.
   - `input/`
-    - PRESCRIPTIONS.csv: the prescription file from MIMIC-III raw dataset
-    - DIAGNOSES_ICD.csv: the diagnosis file from MIMIC-III raw dataset
-    - PROCEDURES_ICD.csv: the procedure file from MIMIC-III raw dataset
-    - RXCUI2atc4.csv: this is a NDC-RXCUI-ATC4 mapping file, and we only need the RXCUI to ATC4 mapping. This file is obtained from https://github.com/sjy1203/GAMENet, where the name is called ndc2atc_level4.csv.
-    - drug-atc.csv: this is a CID-ATC file, which gives the mapping from CID code to detailed ATC code (we will use the prefix of the ATC code latter for aggregation). This file is obtained from https://github.com/sjy1203/GAMENet.
-    - rxnorm2RXCUI.txt: rxnorm to RXCUI mapping file. This file is obtained from https://github.com/sjy1203/GAMENet, where the name is called ndc2rxnorm_mapping.csv.
-    - drugbank_drugs_info.csv: drug information table downloaded from drugbank here https://www.dropbox.com/s/angoirabxurjljh/drugbank_drugs_info.csv?dl=0, which is used to map drug name to drug SMILES string.
-    - drug-DDI.csv: this a large file, containing the drug DDI information, coded by CID. The file could be downloaded from https://drive.google.com/file/d/1mnPc0O0ztz0fkv3HF-dpmBb8PLWsEoDz/view?usp=sharing
+    - `PRESCRIPTIONS.csv`: the prescription file from MIMIC-III raw dataset
+    - `DIAGNOSES_ICD.csv`: the diagnosis file from MIMIC-III raw dataset
+    - `PROCEDURES_ICD.csv`: the procedure file from MIMIC-III raw dataset
+    - `RXCUI2atc4.csv`: this is a NDC-RXCUI-ATC4 mapping file, and we only need the RXCUI to ATC4 mapping. This file is obtained from https://github.com/ycq091044/SafeDrug.
+    - `drug-atc.csv`: this is a CID-ATC file, which gives the mapping from CID code to detailed ATC code (we will use the prefix of the ATC code latter for aggregation). This file is obtained from https://github.com/ycq091044/SafeDrug.
+    - `rxnorm2RXCUI.txt`: rxnorm to RXCUI mapping file. This file is obtained from https://github.com/ycq091044/SafeDrug.
+    - `drugbank_drugs_info.csv`: drug information table downloaded from drugbank here https://www.dropbox.com/s/angoirabxurjljh/drugbank_drugs_info.csv?dl=0, which is used to map drug name to drug SMILES string.
+    - `drug-DDI.csv`: this a large file, containing the drug DDI information, coded by CID. The file could be downloaded from https://drive.google.com/file/d/1mnPc0O0ztz0fkv3HF-dpmBb8PLWsEoDz/view?usp=sharing
   - `output/`
-    - atc3toSMILES.pkl: drug ID (we use ATC-3 level code to represent drug ID) to drug SMILES string dict
-    - ddi_A_final.pkl: ddi adjacency matrix
-    - ddi_matrix_H.pkl: H mask structure (This file is created by **ddi_mask_H.py**)
-    - ehr_adj_final.pkl: used in GAMENet baseline (if two drugs appear in one set, then they are connected)
-    - records_final.pkl: The final diagnosis-procedure-medication EHR records of each patient, used for train/val/test split.
-    - voc_final.pkl: diag/prod/med index to code dictionary
+    - `atc3toSMILES.pkl`: drug ID (we use ATC-3 level code to represent drug ID) to drug SMILES string dict
+    - `ddi_A_final.pkl`: ddi adjacency matrix
+    - `ddi_matrix_H.pkl`: H mask structure (This file is created by **ddi_mask_H.py**)
+    - `ehr_adj_final.pkl`: used in GAMENet baseline (if two drugs appear in one set, then they are connected)
+    - `records_final.pkl`: The final diagnosis-procedure-medication EHR records of each patient, used for train/val/test split.
+    - `voc_final.pkl`: diag/prod/med index to code dictionary
 - `src/`
-  - SafeDrug.py: our model
-  - baselines:
-    - GAMENet.py
-    - DMNC.py: there are some issues for the latest dnc package, please refer to the original DMNC repo https://github.com/thaihungle/DMNC
-    - Leap.py
-    - Retain.py
-    - ECC.py
-    - LR.py
+  - `SafeDrug.py`: our model
+  - baseline models:
+    - `GAMENet.py`
+    - `DMNC.py`
+    - `Leap.py`
+    - `Retain.py`
+    - `ECC.py`
+    - `LR.py`
   - setting file
-    - model.py
-    - util.py
-    - layer.py
+    - `model.py`
+    - `util.py`
+    - `layer.py`
+  - analysis file
+    - `Result-Analysis.ipynb`
 - `dependency.sh`
 - `requirements.txt`
 - `README.md`
@@ -127,10 +129,12 @@ After the processing have been done, we get the following statistics:
   python processing.py
   ```
 
+### Step 3: Run Model(s)
 
-### Step 3: run the code
+To run the `SafeDrug` model, run the following:
 
-```python
+```bash
+cd ~/cs598dl4h-project/src
 python SafeDrug.py
 ```
 
@@ -141,28 +145,27 @@ here is the argument:
                    [--target_ddi TARGET_DDI] [--kp KP] [--dim DIM]
     
     optional arguments:
-      -h, --help            show this help message and exit
-      --Test                test mode
-      --model_name MODEL_NAME
-                            model name
-      --resume_path RESUME_PATH
-                            resume path
-      --lr LR               learning rate
-      --target_ddi TARGET_DDI
-                            target ddi
-      --kp KP               coefficient of P signal
-      --dim DIM             dimension
+      -h, --help                  show this help message and exit
+      --Test                      test mode
+      --model_name MODEL_NAME     model name
+      --resume_path RESUME_PATH   resume path
+      --lr LR                     learning rate
+      --target_ddi TARGET_DDI     target ddi
+      --kp KP                     coefficient of P signal
+      --dim DIM                   dimension
+      --epoch EPOCH               how many epoch
 
+If you want to run all models consecutively, then run:
 
-### Citation
-```bibtex
-@inproceedings{yang2021safedrug,
-    title = {SafeDrug: Dual Molecular Graph Encoders for Safe Drug Recommendations},
-    author = {Yang, Chaoqi and Xiao, Cao and Ma, Fenglong and Glass, Lucas and Sun, Jimeng},
-    booktitle = {Proceedings of the Thirtieth International Joint Conference on
-               Artificial Intelligence, {IJCAI} 2021},
-    year = {2021}
-}
+```bash
+cd ~/cs598dl4h-project/src
+./run_models.sh
 ```
 
-Welcome to contact me <chaoqiy2@illinois.edu> for any question. Partial credit to a previous repo (this paper is also from our group) https://github.com/sjy1203/GAMENet
+### Step 4: Analysis of the results
+
+
+
+## Credits
+
+Our work followed the original codes at https://github.com/ycq091044/SafeDrug.
