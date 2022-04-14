@@ -53,7 +53,7 @@ echo "----------------------  LEAP END -----------------------------"
 # DMNC
 echo "------------------------  DMNC -------------------------------"
 start_time="$(date -u +%s)"
-python DMNC.py
+# python DMNC.py
 end_time="$(date -u +%s)"
 dmnc_time="$(($end_time-$start_time))"
 echo "----------------------  DMNC END -----------------------------"
