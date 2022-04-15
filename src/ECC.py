@@ -94,7 +94,8 @@ def main():
         chain.fit(train_X, train_y)
         fittime = time.time() - tic
         print ('id {}, fitting time: {}'.format(i, fittime))
-    print ('total fitting time: {}'.format(time.time() - tic_total_fit))
+    total_fit_time = time.time() - tic_total_fit
+    print ('total fitting time: {}'.format(total_fit_time))
 
     # exit()
 
@@ -132,6 +133,19 @@ def main():
     print('Epoch: {}, DDI Rate: {:.4}, Jaccard: {:.4}, PRAUC: {:.4}, AVG_PRC: {:.4}, AVG_RECALL: {:.4}, AVG_F1: {:.4}, AVG_MED: {:.4}\n'.format(
         epoch, ddi_rate, ja, prauc, avg_p, avg_r, avg_f1, med_cnt / visit_cnt
         ))
+    
+    history = defaultdict(list)
+    history['fittime'].append(total_fit_time)
+    history['pretime'].append(pretime)
+    history['jaccard'].append(ja)
+    history['ddi_rate'].append(ddi_rate)
+    history['avg_p'].append(avg_p)
+    history['avg_r'].append(avg_r)
+    history['avg_f1'].append(avg_f1)
+    history['prauc'].append(prauc)
+    history['med'].append(med_cnt / visit_cnt)
+    
+    dill.dump(history, open(os.path.join('saved', model_name, 'history.pkl'), 'wb'))
 
 if __name__ == '__main__':
     main()   
