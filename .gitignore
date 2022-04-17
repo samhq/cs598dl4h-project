@@ -284,7 +284,8 @@ records_final.pkl
 ddi_A_final.pkl
 ehr_adj_final.pkl
 voc_final.pkl
-*.pkl
+#*.pkl
 
 check_gpu.py
-src/saved/
+*.model
+
