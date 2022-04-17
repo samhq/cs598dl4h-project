@@ -163,7 +163,7 @@ cd ~/cs598dl4h-project/src
 
 ### Step 4: Analysis of the results
 
-> TODO
+Please check the Jupyter Notebook [here](./src/Result-Analysis.ipynb).
 
 ## Credits
 
