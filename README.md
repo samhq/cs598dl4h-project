@@ -139,9 +139,10 @@ python SafeDrug.py
 
 here is the argument:
 
-    usage: SafeDrug.py [-h] [--Test] [--model_name MODEL_NAME]
-                   [--resume_path RESUME_PATH] [--lr LR]
-                   [--target_ddi TARGET_DDI] [--kp KP] [--dim DIM]
+    usage: SafeDrug.py [-h] [--Test] [--model_name=MODEL_NAME]
+                   [--resume_path=RESUME_PATH] [--lr=LR]
+                   [--target_ddi=TARGET_DDI] [--kp=KP] [--dim=DIM]
+                   [--epoch=EPOCH]
     
     optional arguments:
       -h, --help                  show this help message and exit
