@@ -9,7 +9,7 @@ from torch.optim import Adam
 import os
 from collections import defaultdict
 import torch.nn.functional as F
-
+from pytorch_memlab import MemReporter
 import sys
 sys.path.append("..")
 from models import DMNC
@@ -177,6 +177,8 @@ def main():
         # test
         torch.save(model.state_dict(), open(
             os.path.join('saved', model_name, 'final.model'), 'wb'))
+    reporter = MemReporter()
+    reporter.report()
 
 
 if __name__ == '__main__':

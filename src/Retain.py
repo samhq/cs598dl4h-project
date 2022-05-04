@@ -10,6 +10,7 @@ from torch.optim import Adam
 import os
 import torch.nn.functional as F
 from collections import defaultdict
+from pytorch_memlab import MemReporter
 
 import sys
 sys.path.append("..")
@@ -203,6 +204,9 @@ def main():
         print ('best_epoch: {}'.format(best_epoch))
 
     dill.dump(history, open(os.path.join('saved', args.model_name, 'history_{}.pkl'.format(args.model_name)), 'wb'))
+    
+    reporter = MemReporter()
+    reporter.report()
 
 
 if __name__ == '__main__':

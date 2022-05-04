@@ -11,6 +11,7 @@ import os
 import torch.nn.functional as F
 import random
 from collections import defaultdict
+from pytorch_memlab import MemReporter
 
 import sys
 sys.path.append("..")
@@ -198,6 +199,9 @@ def main():
         print ('best_epoch: {}'.format(best_epoch))
 
         dill.dump(history, open(os.path.join('saved', args.model_name, 'history_{}.pkl'.format(args.model_name)), 'wb'))
+        
+    reporter = MemReporter()
+    reporter.report()
 
 
 def fine_tune(fine_tune_name=''):

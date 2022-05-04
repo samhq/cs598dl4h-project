@@ -6,7 +6,7 @@ import time
 from torch.nn import CrossEntropyLoss
 from torch.optim import Adam
 import os
-
+from pytorch_memlab import MemReporter
 # os.environ["CUDA_VISIBLE_DEVICES"] = "2"
 
 import torch.nn.functional as F
@@ -233,6 +233,9 @@ def main():
         print ('best_epoch: {}'.format(best_epoch))
 
     dill.dump(history, open(os.path.join('saved', args.model_name, 'history_{}.pkl'.format(args.model_name)), 'wb'))
+    
+    reporter = MemReporter()
+    reporter.report()
 
 if __name__ == '__main__':
     main()
