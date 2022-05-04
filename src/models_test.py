@@ -197,7 +197,7 @@ class SafeDrugModel(nn.Module):
         )
         patient_representations = torch.cat([o1, o2], dim=-1).squeeze(dim=0) # (seq, dim*2)
         query = self.query(patient_representations)[-1:, :] # (seq, dim)
-
+        
 	    # MPNN embedding
         MPNN_match = F.sigmoid(torch.mm(query, self.MPNN_emb.t()))
         MPNN_att = self.MPNN_layernorm(MPNN_match + self.MPNN_output(MPNN_match))

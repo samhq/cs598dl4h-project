@@ -204,6 +204,7 @@ def main():
                 if current_ddi_rate <= args.target_ddi:
                     loss = 0.95 * loss_bce + 0.05 * loss_multi
                 else:
+                    #beta = max(0, 1 - (args.target_ddi - current_ddi_rate) / args.kp)
                     beta = min(0, 1 + (args.target_ddi - current_ddi_rate) / args.kp)
                     loss = beta * (0.95 * loss_bce + 0.05 * loss_multi) + (1 - beta) * loss_ddi
 
