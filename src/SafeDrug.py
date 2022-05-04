@@ -35,6 +35,7 @@ parser.add_argument('--kp', type=float, default=0.05, help='coefficient of P sig
 parser.add_argument('--dim', type=int, default=64, help='dimension')
 parser.add_argument('--cuda', type=int, default=0, help='which cuda')
 parser.add_argument('--epoch', type=int, default=50, help='number of epoch')
+parser.add_argument('--ablation', type=int, default=0, help='ablation id')
 
 args = parser.parse_args()
 
@@ -245,7 +246,11 @@ def main():
 
         print ('best_epoch: {}'.format(best_epoch))
 
-    dill.dump(history, open(os.path.join('saved', args.model_name, 'history_{}.pkl'.format(args.model_name)), 'wb'))
+    ablation = args.ablation
+    if ablation > 0:
+        dill.dump(history, open(os.path.join('saved', args.model_name, 'history_{}_ablation_{}.pkl'.format(args.model_name, ablation)), 'wb'))
+    else:
+        dill.dump(history, open(os.path.join('saved', args.model_name, 'history_{}.pkl'.format(args.model_name)), 'wb'))
 
 if __name__ == '__main__':
     main()

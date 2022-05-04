@@ -3,3 +3,4 @@ dill
 scikit-learn
 numpy
 dnc==0.1.1
+pytorch_memlab

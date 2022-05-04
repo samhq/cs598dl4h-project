@@ -9,6 +9,7 @@ from sklearn.metrics import jaccard_score
 from sklearn import tree
 import os
 import time
+from pytorch_memlab import MemReporter
 
 import sys
 sys.path.append('..')
@@ -53,6 +54,8 @@ def augment(y_pred, appear_idx):
     return y_pred_aug
 
 def main():
+    reporter = MemReporter()
+    
     # grid_search = False
     data_path = '../data/output/records_final.pkl'
     voc_path = '../data/output/voc_final.pkl'
@@ -146,6 +149,8 @@ def main():
     history['med'].append(med_cnt / visit_cnt)
     
     dill.dump(history, open(os.path.join('saved', model_name, 'history.pkl'), 'wb'))
+    
+    reporter.report()
 
 if __name__ == '__main__':
     main()   

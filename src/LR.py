@@ -8,6 +8,7 @@ from sklearn.model_selection import GridSearchCV
 from sklearn.metrics import jaccard_score
 import os
 import time
+from pytorch_memlab import MemReporter
 
 import sys
 sys.path.append('..')
@@ -45,6 +46,8 @@ def create_dataset(data, diag_voc, pro_voc, med_voc):
 
 
 def main():
+    reporter = MemReporter()
+    
     # grid_search = False
     data_path = '../data/output/records_final.pkl'
     voc_path = '../data/output/voc_final.pkl'
@@ -133,6 +136,7 @@ def main():
         history['avg_r'].append(avg_r)
         history['avg_f1'].append(avg_f1)
         history['prauc'].append(prauc)
+        history['med'].append(med_cnt / visit_cnt)
 
     dill.dump(history, open(os.path.join('saved', model_name, 'history.pkl'), 'wb'))
     print('Avg_Fittime: {:.8}, Avg_Pretime: {:.8}, Avg_Jaccard: {:.4}, Avg_DDI: {:.4}, Avg_p: {:.4}, Avg_r: {:.4}, \
@@ -146,6 +150,8 @@ def main():
         np.mean(history['avg_f1']),
         np.mean(history['prauc'])
         ))
+    
+    reporter.report()
 
 
 if __name__ == '__main__':
