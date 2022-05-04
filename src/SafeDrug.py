@@ -10,6 +10,7 @@ import time
 from models import SafeDrugModel
 from util import llprint, multi_label_metric, ddi_rate_score, get_n_params, buildMPNN
 import torch.nn.functional as F
+from pytorch_memlab import MemReporter
 
 torch.manual_seed(1203)
 np.random.seed(2048)
@@ -251,6 +252,8 @@ def main():
         dill.dump(history, open(os.path.join('saved', args.model_name, 'history_{}_ablation_{}.pkl'.format(args.model_name, ablation)), 'wb'))
     else:
         dill.dump(history, open(os.path.join('saved', args.model_name, 'history_{}.pkl'.format(args.model_name)), 'wb'))
+    reporter = MemReporter()
+    reporter.report()
 
 if __name__ == '__main__':
     main()
