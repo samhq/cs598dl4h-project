@@ -79,9 +79,18 @@ After the processing have been done, we get the following statistics:
   conda activate SafeDrug
   ```
 
+- Clone this repository in your preferred location. We assume that you clone it in your home directory.
+  
+  ```bash
+  cd ~
+  git clone git@github.com:samhq/cs598dl4h-project.git 
+  ```
+
 - In `SafeDrug` environment, run the following commands to install required python packages (according to your GPU support)
 
   ```bash
+  cd ~/cs598dl4h-project
+  
   # if you don't have GPU
   ./dependency.sh
 
@@ -90,13 +99,6 @@ After the processing have been done, we get the following statistics:
   ```
 
 ### Step 2: Obtaining Data and Processing
-
-- Clone this repository in your preferred location. We assume that you clone it in your home directory.
-  
-  ```bash
-  cd ~
-  git clone git@github.com:samhq/cs598dl4h-project.git 
-  ```
 
 - Go to https://physionet.org/content/mimiciii/1.4/ to download the MIMIC-III dataset (You may need to get the certificate)
 
@@ -159,12 +161,28 @@ If you want to run all models consecutively, then run:
 
 ```bash
 cd ~/cs598dl4h-project/src
-./run_models.sh
+./run_models.sh [NUMBER_OF_EPOCHS]
 ```
 
 ### Step 4: Analysis of the results
 
 Please check the Jupyter Notebook [here](./src/Result-Analysis.ipynb).
+
+## Results
+
+| **Model** |     **DDI**     |   **Jaccard**   |   **F1-score**  |    **PRAUC**    | **Avg. # of Drugs** |
+|-----------|:---------------:|:---------------:|:---------------:|:---------------:|:-------------------:|
+| LR        |      0.0775     |      0.4900     |      0.6470     |      0.7553     |          -          |
+| ECC       |      0.0806     |      0.4868     |      0.6428     |      0.7602     |          -          |
+| RETAIN    | 0.0851 ± 0.0028 | 0.4711 ± 0.0140 | 0.6337 ± 0.0129 | 0.7512 ± 0.0126 |   17.9925 ± 0.8751  |
+| LEAP      | 0.0689 ± 0.0028 | 0.4369 ± 0.0117 | 0.6002 ± 0.0116 | 0.6467 ± 0.0068 |   19.1096 ± 0.1240  |
+| GAMENet   | 0.0836 ± 0.0067 | 0.4790 ± 0.0260 | 0.6382 ± 0.0240 | 0.7393 ± 0.0247 |   25.1478 ± 1.1325  |
+| SafeDrug  | 0.0627 ± 0.0023 | 0.5051 ± 0.0150 | 0.6624 ± 0.0134 | 0.7604 ± 0.0117 |   19.3245 ± 0.5557  |
+| SafeDrug* | 0.0589 ± 0.0005 | 0.5213 ± 0.0030 | 0.6768 ± 0.0027 | 0.7647 ± 0.0025 |   19.9178 ± 0.1604  |
+
+* values from the original SafeDrug model paper
+
+Further analysis can be found at the Jupyter Notebook [here](./src/Result-Analysis.ipynb).
 
 ## Credits
 
